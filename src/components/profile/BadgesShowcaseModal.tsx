@@ -91,9 +91,9 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
               <Award className="w-3.5 h-3.5" />
             </div>
             <div>
-              <h3 className="text-xs sm:text-sm font-black text-white leading-tight">Galeria de Insígnias</h3>
+              <h3 className="text-xs sm:text-sm font-black text-white leading-tight">Galeria de Insígnias & Conquistas</h3>
               <p className="text-[10px] text-slate-400 leading-tight">
-                Selecione até 5 insígnias para o perfil
+                Desbloqueie e selecione até 5 insígnias para o perfil
               </p>
             </div>
           </div>
@@ -262,8 +262,13 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
                 <div
                   key={ach.id}
                   onClick={() => setInspectingBadge(ach)}
-                  className="p-3 rounded-2xl border border-white/5 bg-white/[0.01] opacity-60 hover:opacity-100 hover:border-amber-400/40 hover:bg-white/[0.04] transition-all flex flex-col items-center text-center select-none cursor-pointer"
+                  className="group relative p-3 rounded-2xl border animate-badge-breathe hover:!border-amber-400/80 hover:!shadow-[0_0_20px_rgba(245,158,11,0.25)] hover:!bg-white/[0.06] hover:scale-[1.02] transition-all duration-300 flex flex-col items-center text-center select-none cursor-pointer"
                 >
+                  {/* Selo discreto indicando missão */}
+                  <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400/80 group-hover:text-amber-300 group-hover:border-amber-400/50 group-hover:bg-amber-500/20 text-[8px] font-bold flex items-center gap-0.5 transition-all">
+                    <span>Missão</span>
+                  </div>
+
                   <HexBadge
                     badgeId={ach.id}
                     title={ach.title}
@@ -272,9 +277,14 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
                     isUnlocked={false}
                     size="md"
                   />
-                  <span className="mt-2 text-[10px] text-slate-400 font-medium">
-                    Progresso: {ach.progressLabel}
-                  </span>
+                  <div className="mt-2 flex flex-col items-center">
+                    <span className="text-[10px] text-slate-400 font-medium">
+                      Progresso: {ach.progressLabel}
+                    </span>
+                    <span className="text-[9px] text-amber-400/70 group-hover:text-amber-300 font-semibold mt-0.5 transition-colors">
+                      Toque para ler missão
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
