@@ -68,7 +68,7 @@ export const CollectionVersusModal: React.FC<CollectionVersusModalProps> = ({
   onAddAnimeFromFriend,
   onOpenAnimeDetail,
 }) => {
-  const [activeTab, setActiveTab] = useState<TabType>('mutual');
+  const [activeTab, setActiveTab] = useState<TabType>('all');
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const [inspectItem, setInspectItem] = useState<VisualComparisonCard | null>(null);
 
@@ -98,6 +98,8 @@ export const CollectionVersusModal: React.FC<CollectionVersusModalProps> = ({
       setAnimatedScore(0);
       return;
     }
+
+    setActiveTab('all');
 
     const target = affinity.scorePercent || 0;
     if (target === 0) {
@@ -393,10 +395,22 @@ export const CollectionVersusModal: React.FC<CollectionVersusModalProps> = ({
             <HorizontalScrollContainer scrollStep={140} autoCenterOnClick={true}>
               <button
                 type="button"
+                onClick={() => setActiveTab('all')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shrink-0 cursor-pointer whitespace-nowrap ${
+                  activeTab === 'all'
+                    ? 'bg-indigo-600 text-white shadow-sm'
+                    : 'bg-white/5 text-slate-400 hover:text-white'
+                }`}
+              >
+                Todos ({counts.all})
+              </button>
+
+              <button
+                type="button"
                 onClick={() => setActiveTab('mutual')}
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shrink-0 cursor-pointer whitespace-nowrap ${
                   activeTab === 'mutual'
-                    ? 'bg-indigo-600 text-white shadow-sm'
+                    ? 'bg-cyan-600 text-white shadow-sm'
                     : 'bg-white/5 text-slate-400 hover:text-white'
                 }`}
               >
@@ -451,18 +465,6 @@ export const CollectionVersusModal: React.FC<CollectionVersusModalProps> = ({
                 }`}
               >
                 Só Você Tem ({counts.myOnly})
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveTab('all')}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shrink-0 cursor-pointer whitespace-nowrap ${
-                  activeTab === 'all'
-                    ? 'bg-slate-700 text-white shadow-sm'
-                    : 'bg-white/5 text-slate-400 hover:text-white'
-                }`}
-              >
-                Todos ({counts.all})
               </button>
             </HorizontalScrollContainer>
           </div>

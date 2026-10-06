@@ -14,6 +14,7 @@ interface HexBadgeProps {
   isUnlocked?: boolean;
   size?: 'sm' | 'md' | 'lg';
   showSubtitle?: boolean;
+  showTitle?: boolean;
   onClick?: () => void;
   className?: string;
 }
@@ -96,6 +97,7 @@ export const HexBadge: React.FC<HexBadgeProps> = ({
   isUnlocked = true,
   size = 'md',
   showSubtitle = false,
+  showTitle = true,
   onClick,
   className = '',
 }) => {
@@ -223,7 +225,7 @@ export const HexBadge: React.FC<HexBadgeProps> = ({
       </div>
 
       {/* Rótulo do Nome da Insígnia - Adaptação dinâmica para nunca cortar */}
-      {title && (
+      {showTitle && title && (
         <span
           className={`mt-1 font-bold text-white w-full max-w-full px-0.5 line-clamp-3 break-words text-center transition-colors ${getDynamicLabelClass(
             title,

@@ -107,8 +107,8 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
           </button>
         </div>
 
-        {/* Conteúdo */}
-        <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6">
+        {/* Conteúdo com rolagem ultra fluida acelerada por hardware */}
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6 smooth-scroll-container overscroll-contain">
           {/* Seção dos 5 Slots Equipados no Topo */}
           {isEditable && (
             <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.03] border border-amber-400/20 space-y-3">
@@ -198,14 +198,6 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
                           : 'bg-white/[0.03] border-white/10 hover:border-amber-400/50 hover:bg-white/[0.06]'
                       }`}
                     >
-                      {/* Selo de Equipado */}
-                      {isEquipped && (
-                        <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center gap-0.5">
-                          <Check className="w-3 h-3" />
-                          <span>Equipada</span>
-                        </div>
-                      )}
-
                       <HexBadge
                         badgeId={ach.id}
                         title={ach.title}
@@ -281,9 +273,6 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
                     <span className="text-[10px] text-slate-400 font-medium">
                       Progresso: {ach.progressLabel}
                     </span>
-                    <span className="text-[9px] text-amber-400/70 group-hover:text-amber-300 font-semibold mt-0.5 transition-colors">
-                      Toque para ler missão
-                    </span>
                   </div>
                 </div>
               ))}
@@ -313,14 +302,14 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
         </div>
       </div>
 
-      {/* Pop-up Informativo Contextual ao Clicar na Insígnia */}
+      {/* Pop-up Informativo Contextual ao Clicar na Insígnia (Compacto e Sem Duplicação) */}
       {inspectingBadge && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-3 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150"
           onClick={() => setInspectingBadge(null)}
         >
           <div
-            className="relative w-full max-w-sm bg-[#08080a] border border-amber-400/30 rounded-3xl p-5 shadow-2xl flex flex-col items-center text-center space-y-4 animate-in zoom-in-95 duration-150 cursor-pointer"
+            className="relative w-full max-w-[310px] sm:max-w-xs bg-[#08080a] border border-amber-400/30 rounded-2xl p-4 shadow-2xl flex flex-col items-center text-center space-y-2.5 animate-in zoom-in-95 duration-150 cursor-pointer"
             onClick={() => setInspectingBadge(null)}
           >
             {/* Botão de Fechar */}
@@ -330,68 +319,69 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
                 e.stopPropagation();
                 setInspectingBadge(null);
               }}
-              className="absolute top-3.5 right-3.5 p-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="absolute top-2.5 right-2.5 p-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
               aria-label="Fechar"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
 
-            {/* HexBadge em Destaque */}
-            <div className="pt-1">
+            {/* HexBadge em Destaque (Apenas a arte, sem repetir o nome) */}
+            <div>
               <HexBadge
                 badgeId={inspectingBadge.id}
                 title={inspectingBadge.title}
                 icon={inspectingBadge.icon}
                 tone={getBadgeTone(inspectingBadge.tier)}
                 isUnlocked={inspectingBadge.isUnlocked}
-                size="lg"
+                size="md"
+                showTitle={false}
                 showSubtitle={false}
               />
             </div>
 
-            {/* Título & Status */}
-            <div className="space-y-1.5 w-full">
-              <h4 className="text-base font-black text-white leading-tight">
+            {/* Título Único & Status */}
+            <div className="space-y-1 w-full">
+              <h4 className="text-sm font-black text-white leading-tight">
                 {inspectingBadge.title}
               </h4>
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-1.5 pt-0.5">
                 {inspectingBadge.isUnlocked ? (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-black">
-                    <Check className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[9px] font-black">
+                    <Check className="w-2.5 h-2.5" />
                     <span>Conquistada</span>
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-slate-400 text-[10px] font-black">
-                    <Lock className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800/90 border border-slate-700 text-slate-400 text-[9px] font-black">
+                    <Lock className="w-2.5 h-2.5" />
                     <span>Bloqueada</span>
                   </span>
                 )}
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[10px] font-black">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[9px] font-black">
                   +{inspectingBadge.xpReward} XP
                 </span>
               </div>
             </div>
 
             {/* Bloco da Missão / Como Conquistar */}
-            <div className="w-full p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 text-left space-y-1.5">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1">
-                <Award className="w-3.5 h-3.5 text-amber-400" />
+            <div className="w-full p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-left space-y-1">
+              <span className="text-[9px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                <Award className="w-3 h-3 text-amber-400" />
                 <span>Missão para Desbloquear</span>
               </span>
-              <p className="text-xs text-slate-200 leading-relaxed font-medium">
+              <p className="text-[11px] text-slate-200 leading-relaxed font-medium">
                 {inspectingBadge.description}
               </p>
             </div>
 
             {/* Barra de Progresso */}
-            <div className="w-full space-y-1.5 text-left">
-              <div className="flex items-center justify-between text-[11px]">
+            <div className="w-full space-y-1 text-left">
+              <div className="flex items-center justify-between text-[10px]">
                 <span className="text-slate-400 font-medium">Seu Progresso:</span>
                 <span className={`font-black ${inspectingBadge.isUnlocked ? 'text-emerald-400' : 'text-amber-300'}`}>
                   {inspectingBadge.progressLabel || (inspectingBadge.isUnlocked ? '100% Concluído' : `${Math.round(inspectingBadge.progress)}%`)}
                 </span>
               </div>
-              <div className="w-full h-2 rounded-full bg-white/5 border border-white/10 overflow-hidden">
+              <div className="w-full h-1.5 rounded-full bg-white/5 border border-white/10 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-300 ${
                     inspectingBadge.isUnlocked
@@ -404,7 +394,7 @@ export const BadgesShowcaseModal: React.FC<BadgesShowcaseModalProps> = ({
             </div>
 
             {/* Dica de Toque para Fechar */}
-            <p className="text-[10px] text-slate-500 font-medium">
+            <p className="text-[9px] text-slate-500 font-medium pt-0.5">
               Toque em qualquer lugar para fechar
             </p>
           </div>
